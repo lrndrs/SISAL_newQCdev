@@ -4,6 +4,7 @@ Created on Tue Apr 25 14:30:18 2017
 
 @author: K. Atsawawaranunt
 @contact: L.Comas-Bru (l.comasbru@reading.ac.uk)
+@contact: E.Pestalozzi (epestalozzi@student.ethz.ch)
 
 Codes check the workbooks and inform the database manager of the checks
 13 September 2019 (A)
