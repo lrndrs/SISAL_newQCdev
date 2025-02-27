@@ -90,15 +90,15 @@ import pandas as pd
 import numpy as np
 import shutil, os, sys
 from numbers import Number
+import warnings
 import xlrd # needs to be added to read excel files. usually installed along with pandas 
 # turn off pandas chained assignment warning
 pd.options.mode.chained_assignment = None
-
 # =============================================================================
 # Section 2. Read in the workbook
 # =============================================================================
-#input_file = 'test_input_files/test_entity_status_notes_number.xlsx'
-input_file = sys.argv[1]
+input_file = 'QC_passed_SISAL_workbook_v14_belum_sb2_nk3.xlsx'
+#input_file = sys.argv[1]
 # Try to read in the workbook
 try:
     xl = pd.ExcelFile(input_file)
@@ -116,60 +116,65 @@ sample_ls = [k for k in sht_nm if 'Sample data' in k]
 # -----------------------------------------------------------------------------
 # Skip first row (description row)
 # column title starts at row number 2/ index = 1
-try:
-    site_tb = xl.parse(sheet_name = 'Site metadata', skiprows = 1).dropna(how = 'all')
-except:
-    sys.exit('Cannot read in Site metadata spreadsheet, likely no spreadsheet called "Site metadata"')
-try:
-    entity_tb = xl.parse(sheet_name = 'Entity metadata', skiprows = 1).dropna(how = 'all')
-except:
-    sys.exit('Cannot read in Enitity metadata spreadsheet, likely no spreadsheet called "Entity metadata"')
-try:
-    ref_tb = xl.parse(sheet_name = 'References', skiprows = 1).dropna(how = 'all')
-except:
-    sys.exit('Cannot read in References spreadsheet, likely no spreadsheet called "References"')
-try:
-    dating_tb = xl.parse(sheet_name = 'Dating information', skiprows = 1).dropna(how = 'all')
-except:
-    sys.exit('Cannot read in Dating information spreadsheet, likely no spreadsheet called "Dating information"')
-try:
-    dating_lamina_tb = xl.parse(sheet_name = 'Lamina age vs depth', skiprows = 1).dropna(how = 'all')
-except:
-    sys.exit('Cannot read in Lamina age vs depth spreadsheet, likely no spreadsheet called "Lamina age vs depth"')
+#catch the warnings generated because of the use of dropdown lists
 
-# Read in sample spreadsheet
-if len(sample_ls) == 1:
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", category=UserWarning, message=".*(Data Validation extension is not supported and will be removed|Unknown extension is not supported and will be removed).*")
     try:
-        sample_tb = xl.parse(sheet_name = 'Sample data', skiprows = 1).dropna(how = 'all')
+        site_tb = xl.parse(sheet_name = 'Site metadata', skiprows = 1).dropna(how = 'all')
     except:
-        sys.exit('Cannot read in Sample data spreadsheet, likely no spreadsheet called "Sample data"')
-elif len(sample_ls) == 0:
-    sys.exit('Sample data spreadsheet does not exist, likely no spreadsheet called "Sample data"')
-else:
-    sys.exit('More than one Sample data spreadsheet exist. This is not allowed')
+        sys.exit('Cannot read in Site metadata spreadsheet, likely no spreadsheet called "Site metadata"')
+    try:
+        entity_tb = xl.parse(sheet_name = 'Entity metadata', skiprows = 1).dropna(how = 'all')
+    except:
+        sys.exit('Cannot read in Enitity metadata spreadsheet, likely no spreadsheet called "Entity metadata"')
+    try:
+        ref_tb = xl.parse(sheet_name = 'References', skiprows = 1).dropna(how = 'all')
+    except:
+        sys.exit('Cannot read in References spreadsheet, likely no spreadsheet called "References"') 
+    try:
+        dating_tb = xl.parse(sheet_name = 'Dating information', skiprows = 1).dropna(how = 'all')
+    except:
+        sys.exit('Cannot read in Dating information spreadsheet, likely no spreadsheet called "Dating information"')
+    try:
+        dating_lamina_tb = xl.parse(sheet_name = 'Lamina age vs depth', skiprows = 1).dropna(how = 'all')
+    except:
+        sys.exit('Cannot read in Lamina age vs depth spreadsheet, likely no spreadsheet called "Lamina age vs depth"')
+
+    # Read in sample spreadsheet
+    if len(sample_ls) == 1:
+        try:
+            sample_tb = xl.parse(sheet_name = 'Sample data', skiprows = 1).dropna(how = 'all')
+        except:
+            sys.exit('Cannot read in Sample data spreadsheet, likely no spreadsheet called "Sample data"')
+    elif len(sample_ls) == 0:
+        sys.exit('Sample data spreadsheet does not exist, likely no spreadsheet called "Sample data"')
+    else:
+        sys.exit('More than one Sample data spreadsheet exist. This is not allowed')
 
 # =============================================================================
 # Section 3. Check workbook is the right version
 # =============================================================================
-site_col = set(['site_name', 'latitude', 'longitude', 'elevation', 'geology', 'rock_age', 'monitoring']) - set(site_tb.columns)
-entity_col = set(['entity_name', 'one_and_only', 'entity_status_info', 'entity_status_notes', 'depth_ref', 'cover_thickness', 'distance_entrance', 'speleothem_type', 'drip_type', 'd13C', 'd18O', 'd18O_water_equilibrium', 'trace_elements', 'organics', 'fluid_inclusions', 'mineralogy_petrology_fabric', 'clumped_isotopes', 'noble_gas_temperatures', 'C14', 'ODL', 'Mg_Ca', 'contact', 'data_DOI_URL']) - set(entity_tb.columns)
+site_col = set(['site_name', 'latitude', 'longitude', 'elevation', 'monitoring']) - set(site_tb.columns)
+entity_col = set(["entity_name", "one_and_only", "entity_status_info", "entity_status_notes", "depth_ref", "geology", "rock_age", "vegetation_type", "land_use", "cover_type", "cover_thickness", "host_rock_trace_elements", "drip_water_trace_elements", "distance_entrance", "speleothem_type", "drip_type", "drip_height", "d13C", "d18O", "iso_std", "d18O_water_equilibrium", "d18O_dripwater_carbonate_difference", "organics", "fluid_inclusions", "mineralogy_petrology_fabric", "clumped_isotopes", "noble_gas_temperatures", "C14", "ODL", "Sr_Ca", "Sr_Ca_method", "Sr_Ca_std", "Sr_Ca_downsampled", "Sr_Ca_downsampling_method", "Mg_Ca", "Mg_Ca_method", "Mg_Ca_std", "Mg_Ca_downsampled", "Mg_Ca_downsampling_method", "Ba_Ca", "Ba_Ca_method", "Ba_Ca_std", "Ba_Ca_downsampled", "Ba_Ca_downsampling_method", "U_Ca", "U_Ca_method", "U_Ca_std", "U_Ca_downsampled", "U_Ca_downsampling_method", "P_Ca", "P_Ca_method", "P_Ca_std", "P_Ca_downsampled", "P_Ca_downsampling_method", "Sr_isotopes", "Sr_isotopes_method", "Sr_isotopes_std", "trace_elements_datafile", "trace_elements_metadatafile", "cave_map", "entity_scan", "contact", "data_DOI_URL"]) - set(entity_tb.columns)
 ref_col = set(['entity_name', 'citation', 'publication_DOI']) - set(ref_tb.columns)
-date_col = set(['entity_name','date_type','depth_dating','dating_thickness','lab_num','material_dated','min_weight','max_weight','uncorr_age','uncorr_age_uncert_pos','uncorr_age_uncert_neg','14C_correction','calib_used','date_used','238U_content','238U_uncertainty','232Th_content','232Th_uncertainty','230Th_content','230Th_uncertainty','230Th_232Th_ratio','230Th_232Th_ratio_uncertainty','230Th_238U_activity','230Th_238U_activity_uncertainty','234U_238U_activity','234U_238U_activity_uncertainty','decay_constant','ini_230Th_232Th_ratio','ini_230Th_232Th_ratio_uncertainty','corr_age','corr_age_uncert_pos','corr_age_uncert_neg','modern_reference','chem_year']) - set(dating_tb.columns)
+date_col = set(["entity_name", "date_type", "depth_dating", "dating_thickness", "lab_num", "material_dated", "min_weight", "max_weight", "uncorr_age", "uncorr_age_uncert_pos", "uncorr_age_uncert_neg", "14C_correction", "calib_used", "date_used", "238U_content", "238U_uncertainty", "232Th_content", "232Th_uncertainty", "230Th_content", "230Th_uncertainty", "230Th_232Th_ratio", "230Th_232Th_ratio_uncertainty", "230Th_238U_activity", "230Th_238U_activity_uncertainty", "234U_238U_activity", "234U_238U_activity_uncertainty", "decay_constant", "ini_230Th_232Th_ratio", "ini_230Th_232Th_ratio_uncertainty", "corr_age", "corr_age_uncert_pos", "corr_age_uncert_neg", "modern_reference", "chem_year"]) - set(dating_tb.columns)
 lam_col = set(['entity_name', 'depth_lam', 'lam_thickness', 'lam_age', 'lam_age_uncert_pos', 'lam_age_uncert_neg', 'modern_reference']) - set(dating_lamina_tb.columns)
-sample_col = set(['entity_name', 'depth_sample', 'hiatus', 'gap', 'mineralogy', 'arag_corr', 'interp_age', 'interp_age_uncert_pos', 'interp_age_uncert_neg', 'age_model_type', 'modern_reference', 'ann_lam_check', 'dep_rate_check', 'sample_thickness', 'd13C_measurement', 'd13C_precision', 'd18O_measurement', 'd18O_precision', 'iso_std']) - set(sample_tb.columns)
+sample_col = set(["entity_name", "depth_sample", "hiatus", "gap", "mineralogy", "arag_corr", "interp_age", "interp_age_uncert_pos", "interp_age_uncert_neg", "age_model_type", "modern_reference", "ann_lam_check", "dep_rate_check", "sample_thickness", "d13C_measurement", "d13C_precision", "d18O_measurement", "d18O_precision", "Sr_Ca_measurement", "Sr_Ca_precision", "Mg_Ca_measurement", "Mg_Ca_precision", "Ba_Ca_measurement", "Ba_Ca_precision", "U_Ca_measurement", "U_Ca_precision", "P_Ca_measurement", "P_Ca_precision", "Sr_isotopes_measurement", "Sr_isotopes_precision"]) - set(sample_tb.columns)
+
 if len(site_col) + len(entity_col) + len(ref_col) + len(date_col) + len(lam_col) + len(sample_col) > 0:
     if len(site_col) > 0:
         print('Site metadata table is missing column: %s' %str(list(site_col)))
     if len(entity_col) > 0:
         print('Entity metadata table is missing column: %s' %str(list(entity_col)))
     if len(ref_col) > 0:
-        print('Entity metadata table is missing column: %s' %str(list(ref_col)))
+        print('References table is missing column: %s' %str(list(ref_col)))
     if len(date_col) > 0:
-        print('Entity metadata table is missing column: %s' %str(list(date_col)))
+        print('Dating information table is missing column: %s' %str(list(date_col)))
     if len(lam_col) > 0:
-        print('Entity metadata table is missing column: %s' %str(list(lam_col)))
+        print('Lamina age vs depth table is missing column: %s' %str(list(lam_col)))
     if len(sample_col) > 0:
-        print('Entity metadata table is missing column: %s' %str(list(sample_col)))
+        print('Sample data table is missing column: %s' %str(list(sample_col)))
     sys.exit('This workbook is likely not version 12. The checks cannot be performed.')
 
 # =============================================================================
@@ -784,6 +789,7 @@ dating_tb.entity_name = dating_tb.entity_name.replace(np.nan, '', regex = True)
 dating_tb.date_used = dating_tb.date_used.replace(np.nan, '', regex = True)
 dating_tb.date_type = dating_tb.date_type.replace(np.nan, '', regex = True)
 dating_tb.calib_used = dating_tb.calib_used.replace(np.nan, '', regex = True)
+
 # convert all site and entity names to string
 # site_tb.site_name = site_tb.site_name.astype('str')
 if entity_tb.entity_name.dtype != 'O':
@@ -806,7 +812,7 @@ if ref_tb.publication_DOI.dtype != 'O':
 # =============================================================================
 # Section 6. Count number of unknowns
 # =============================================================================
-# count number of unknowns in each table and print this at the end
+# count number of unknowns and unique entities in each table and print this at the end
 site_unkwn = count_values(site_tb, 'unknown')
 entity_unkwn = count_values(entity_tb, 'unknown')
 dating_unkwn = count_values(dating_tb, 'unknown')
@@ -826,7 +832,7 @@ warning_ctr = 0
 #
 # Section 7.i. Check for all entities/sites
 # _____________________________________________________________________________
-# create yes, No, unknown list
+# create yes, no, unknown list
 y_n_nk_list = ['yes', 'no', 'unknown']
 
 # -----------------------------------------------------------------------------
@@ -1743,7 +1749,7 @@ if dating_lamina_tb.shape[0] > 0:
             warning_ctr += check_numbers_in_range(dating_lamina_tb, 'Lamina age vs depth', 'lam_age', -70, np.inf)
 
 # -----------------------------------------------------------------------------
-# Section 7.iii.f. Reference spreadsheet
+# Section 7.iii.f.
 # -----------------------------------------------------------------------------
 # Reference table
 # Check that if the citation is the same, the DOI must be the same
