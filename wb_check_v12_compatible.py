@@ -109,14 +109,14 @@ except:
 
 # List of spreadsheet names containing "Sample data"
 # This is to check for cases where workbooks contain more than one Sample data
-# spreadsheet.
+# spreadsheet
 sample_ls = [k for k in sht_nm if 'Sample data' in k]
 # -----------------------------------------------------------------------------
 # Read in spreadsheets from the workbook
 # -----------------------------------------------------------------------------
 # Skip first row (description row)
 # column title starts at row number 2/ index = 1
-#catch the warnings generated because of the use of dropdown lists
+# catch the warnings generated because of the use of dropdown lists
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore", category=UserWarning, message=".*(Data Validation extension is not supported and will be removed|Unknown extension is not supported and will be removed).*")
@@ -175,7 +175,7 @@ if len(site_col) + len(entity_col) + len(ref_col) + len(date_col) + len(lam_col)
         print('Lamina age vs depth table is missing column: %s' %str(list(lam_col)))
     if len(sample_col) > 0:
         print('Sample data table is missing column: %s' %str(list(sample_col)))
-    sys.exit('This workbook is likely not version 12. The checks cannot be performed.')
+    sys.exit('This workbook is likely not version 15. The checks cannot be performed.')
 
 # =============================================================================
 # Section 4. Define prerequisite functions
@@ -415,7 +415,10 @@ def check_independent_dependent_col(table, table_name, independent_column, depen
     else:
         return(1)
 
-def check_Isotope_Checks(table, independent_column, dependent_column1, dependent_column2):
+def check_isotope_checks(table, independent_column, dependent_column1, dependent_column2):
+    """
+    
+    """
     sub_tb = table.loc[pd.notnull(table[independent_column]) & (pd.isnull(table[dependent_column1]) & pd.isnull(table[dependent_column2])),:]
     # +3 because values starts on row number 3
     number_of_rows = len(sub_tb.index)
@@ -828,19 +831,20 @@ entity_count = len(pd.unique(entity_tb['entity_name']))
 # Initiate warning counter
 warning_ctr = 0
 
+# create yes, no, unknown list
+y_n_nk_list = ['yes', 'no', 'unknown']
 # _____________________________________________________________________________
 #
 # Section 7.i. Check for all entities/sites
 # _____________________________________________________________________________
-# create yes, no, unknown list
-y_n_nk_list = ['yes', 'no', 'unknown']
+
 
 # -----------------------------------------------------------------------------
 # Section 7.i.a. Site spreadsheet 
 # -----------------------------------------------------------------------------
 # Check that the site table has one and only one record
 if len(site_tb.index) != 1:
-    sys.exit('Site metadata table is either empty or has more than one site. Only one site per workbook is allowed.')
+    sys.exit('Site metadata table is either empty or has more than one site. Exactly one site per workbook is allowed.')
 else:
     lat = site_tb.loc[0, 'latitude']
     lon = site_tb.loc[0, 'longitude']
@@ -1115,7 +1119,7 @@ for i in entity_tb.index:
         warning_ctr += check_independent_dependent_col(sample_tb_composite_rm_gap, 'Sample data', 'interp_age_uncert_pos', 'interp_age_uncert_neg')
         warning_ctr += check_independent_dependent_col(sample_tb_composite_rm_gap, 'Sample data', 'iso_std', 'd18O_measurement')
         warning_ctr += check_independent_dependent_col(sample_tb_composite_rm_gap, 'Sample data', 'iso_std', 'd13C_measurement')
-        warning_ctr += check_Isotope_Checks(sample_tb_composite_rm_gap, 'iso_std', 'd18O_measurement', 'd13C_measurement')
+        warning_ctr += check_isotope_checks(sample_tb_composite_rm_gap, 'iso_std', 'd18O_measurement', 'd13C_measurement')
         warning_ctr += check_values2list(sample_tb_composite_rm_gap, 'hiatus', 'Sample data', ['H', ''], na_rm = True) # added '' as np.nan was replaced by ''
         warning_ctr += check_values2list(sample_tb_composite_rm_gap, 'gap', 'Sample data', ['G', ''], na_rm = True) # added '' as np.nan was replaced by ''
 # =============================================================================
@@ -1230,7 +1234,6 @@ if len(ent_ls2) > 0:
 # -----------------------------------------------------------------------------
 # Section 7.iii.c. Sample spreadsheet
 # -----------------------------------------------------------------------------
-
 if len(sample_tb.index) > 0:
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # 7.iii.c.1. Check on sample table (full) 
@@ -1239,7 +1242,7 @@ if len(sample_tb.index) > 0:
     # Check that depth_sample is in mm not cm or m
     for i in set(sample_tb['entity_name']):
         if max(sample_tb.loc[sample_tb['entity_name'] == i,'depth_sample']) - min(sample_tb.loc[sample_tb['entity_name'] == i,'depth_sample']) <= 100:
-#            warning_ctr += 1
+            # warning_ctr += 1
             print('Informative: Sample data tab: The total length of Entity %s is less than 100mm. This is either a very small speleothem or the depths are in cm.' %i)
     # Check depth_sample values
     pass_depthsample_checks = False
@@ -1326,7 +1329,7 @@ if len(sample_tb.index) > 0:
     warning_ctr += check_independent_dependent_col(sample_tb_rm_hiatus, 'Sample data', 'interp_age_uncert_pos', 'interp_age_uncert_neg')
     warning_ctr += check_independent_dependent_col(sample_tb_rm_hiatus, 'Sample data', 'iso_std', 'd18O_measurement')
     warning_ctr += check_independent_dependent_col(sample_tb_rm_hiatus, 'Sample data', 'iso_std', 'd13C_measurement')
-    warning_ctr += check_Isotope_Checks(sample_tb_rm_hiatus, 'iso_std', 'd18O_measurement', 'd13C_measurement')
+    warning_ctr += check_isotope_checks(sample_tb_rm_hiatus, 'iso_std', 'd18O_measurement', 'd13C_measurement')
     warning_ctr += check_values2list(sample_tb_rm_hiatus, 'iso_std', 'Sample data', ['PDB', 'Vienna-PDB'])
     # Check that there are no 'gaps' in the normal entities
     if sample_tb_rm_hiatus.loc[sample_tb_rm_hiatus['gap'] == 'G',:].shape[0] > 0:
@@ -1749,7 +1752,7 @@ if dating_lamina_tb.shape[0] > 0:
             warning_ctr += check_numbers_in_range(dating_lamina_tb, 'Lamina age vs depth', 'lam_age', -70, np.inf)
 
 # -----------------------------------------------------------------------------
-# Section 7.iii.f.
+# Section 7.iii.f. Reference spreadsheet
 # -----------------------------------------------------------------------------
 # Reference table
 # Check that if the citation is the same, the DOI must be the same
