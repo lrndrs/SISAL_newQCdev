@@ -168,11 +168,11 @@ with warnings.catch_warnings():
 # Section 3. Check workbook is the right version
 # =============================================================================
 site_col = set(['site_name', 'latitude', 'longitude', 'elevation', 'monitoring']) - set(site_tb.columns)
-entity_col = set(["entity_name", "one_and_only", "entity_status_info", "entity_status_notes", "depth_ref", "geology", "rock_age", "vegetation_type", "land_use", "cover_type", "cover_thickness", "host_rock_trace_elements", "drip_water_trace_elements", "distance_entrance", "speleothem_type", "drip_type", "drip_height", "d13C", "d18O", "iso_std", "d18O_water_equilibrium", "d18O_dripwater_carbonate_difference", "organics", "fluid_inclusions", "mineralogy_petrology_fabric", "clumped_isotopes", "noble_gas_temperatures", "C14", "ODL", "Sr_Ca", "Sr_Ca_method", "Sr_Ca_std", "Sr_Ca_downsampled", "Sr_Ca_downsampling_method", "Mg_Ca", "Mg_Ca_method", "Mg_Ca_std", "Mg_Ca_downsampled", "Mg_Ca_downsampling_method", "Ba_Ca", "Ba_Ca_method", "Ba_Ca_std", "Ba_Ca_downsampled", "Ba_Ca_downsampling_method", "U_Ca", "U_Ca_method", "U_Ca_std", "U_Ca_downsampled", "U_Ca_downsampling_method", "P_Ca", "P_Ca_method", "P_Ca_std", "P_Ca_downsampled", "P_Ca_downsampling_method", "Sr_isotopes", "Sr_isotopes_method", "Sr_isotopes_std", "trace_elements_datafile", "trace_elements_metadatafile", "cave_map", "entity_scan", "contact", "data_DOI_URL"]) - set(entity_tb.columns)
+entity_col = set(["entity_name", "one_and_only", "entity_status_info", "entity_status_notes", "geology", "rock_age", "vegetation_type", "land_use", "cover_type", "cover_thickness", "host_rock_trace_elements", "drip_water_trace_elements", "distance_entrance", "speleothem_type", "drip_type", "drip_height", "d13C", "d18O", "iso_std", "d18O_water_equilibrium", "d18O_dripwater_carbonate_difference", "organics", "fluid_inclusions", "mineralogy_petrology_fabric", "clumped_isotopes", "noble_gas_temperatures", "C14", "ODL", "Sr_Ca", "Sr_Ca_method", "Sr_Ca_std", "Sr_Ca_downsampled", "Sr_Ca_downsampling_method", "Mg_Ca", "Mg_Ca_method", "Mg_Ca_std", "Mg_Ca_downsampled", "Mg_Ca_downsampling_method", "Ba_Ca", "Ba_Ca_method", "Ba_Ca_std", "Ba_Ca_downsampled", "Ba_Ca_downsampling_method", "U_Ca", "U_Ca_method", "U_Ca_std", "U_Ca_downsampled", "U_Ca_downsampling_method", "P_Ca", "P_Ca_method", "P_Ca_std", "P_Ca_downsampled", "P_Ca_downsampling_method", "Sr_isotopes", "Sr_isotopes_method", "Sr_isotopes_std", "trace_elements_datafile", "trace_elements_metadatafile", "cave_map", "entity_scan", "contact", "data_DOI_URL"]) - set(entity_tb.columns)
 ref_col = set(['entity_name', 'citation', 'publication_DOI']) - set(ref_tb.columns)
-date_col = set(["entity_name", "date_type", "depth_dating", "dating_thickness", "lab_num", "material_dated", "min_weight", "max_weight", "uncorr_age", "uncorr_age_uncert_pos", "uncorr_age_uncert_neg", "14C_correction", "calib_used", "date_used", "238U_content", "238U_uncertainty", "232Th_content", "232Th_uncertainty", "230Th_content", "230Th_uncertainty", "230Th_232Th_ratio", "230Th_232Th_ratio_uncertainty", "230Th_238U_activity", "230Th_238U_activity_uncertainty", "234U_238U_activity", "234U_238U_activity_uncertainty", "decay_constant", "ini_230Th_232Th_ratio", "ini_230Th_232Th_ratio_uncertainty", "corr_age", "corr_age_uncert_pos", "corr_age_uncert_neg", "modern_reference", "chem_year"]) - set(dating_tb.columns)
-lam_col = set(['entity_name', 'depth_lam', 'lam_thickness', 'lam_age', 'lam_age_uncert_pos', 'lam_age_uncert_neg', 'modern_reference']) - set(dating_lamina_tb.columns)
-sample_col = set(["entity_name", "depth_sample", "hiatus", "gap", "mineralogy", "arag_corr", "interp_age", "interp_age_uncert_pos", "interp_age_uncert_neg", "age_model_type", "modern_reference", "ann_lam_check", "dep_rate_check", "sample_thickness", "d13C_measurement", "d13C_precision", "d18O_measurement", "d18O_precision", "Sr_Ca_measurement", "Sr_Ca_precision", "Mg_Ca_measurement", "Mg_Ca_precision", "Ba_Ca_measurement", "Ba_Ca_precision", "U_Ca_measurement", "U_Ca_precision", "P_Ca_measurement", "P_Ca_precision", "Sr_isotopes_measurement", "Sr_isotopes_precision"]) - set(sample_tb.columns)
+date_col = set(["entity_name", "date_type", "depth_dating", "dating_thickness", "lab_num", "material_dated", "min_weight", "max_weight", "uncorr_age", "uncorr_age_uncert_pos", "uncorr_age_uncert_neg", "14C_correction", "calib_used", "date_used", "238U_content", "238U_uncertainty", "232Th_content", "232Th_uncertainty", "230Th_content", "230Th_uncertainty", "230Th_232Th_ratio", "230Th_232Th_ratio_uncertainty", "230Th_238U_activity", "230Th_238U_activity_uncertainty", "234U_238U_activity", "234U_238U_activity_uncertainty", "decay_constant", "ini_230Th_232Th_ratio", "ini_230Th_232Th_ratio_uncertainty", "corr_age", "corr_age_uncert_pos", "corr_age_uncert_neg", "chem_year"]) - set(dating_tb.columns)
+lam_col = set(['entity_name', 'depth_lam', 'lam_thickness', 'lam_age', 'lam_age_uncert_pos', 'lam_age_uncert_neg']) - set(dating_lamina_tb.columns)
+sample_col = set(["entity_name", "depth_sample", "hiatus", "gap", "mineralogy", "arag_corr", "interp_age", "interp_age_uncert_pos", "interp_age_uncert_neg", "age_model_type", "ann_lam_check", "dep_rate_check", "sample_thickness", "d13C_measurement", "d13C_precision", "d18O_measurement", "d18O_precision", "Sr_Ca_measurement", "Sr_Ca_precision", "Mg_Ca_measurement", "Mg_Ca_precision", "Ba_Ca_measurement", "Ba_Ca_precision", "U_Ca_measurement", "U_Ca_precision", "P_Ca_measurement", "P_Ca_precision", "Sr_isotopes_measurement", "Sr_isotopes_precision"]) - set(sample_tb.columns)
 
 if len(site_col) + len(entity_col) + len(ref_col) + len(date_col) + len(lam_col) + len(sample_col) > 0:
     if len(site_col) > 0:
@@ -210,6 +210,8 @@ def count_values(table, value):
     for i in table.index:
         ctr += len(np.flatnonzero(table.loc[i,:] == value))
     return(ctr)
+
+    
 
 def check_possible_hiatuses(table, depthcol, agecol, hiatuscol, depth_ref, entity_name = '', modrefcol = 'modern_reference', na_rm = False):
     """Check for possible missing hiatuses; also for missing depths
@@ -388,11 +390,13 @@ def check_no_values(table, table_name, col_name, col_dtype_str_set = True):
     Raises:
         None
     """
+    
     idx = []
-    if (col_dtype_str_set == False):
-        idx = table.loc[pd.isnull(table[col_name]),:].index + 3
-    elif (col_dtype_str_set == True):
+    if col_dtype_str_set:
         idx = table.loc[table[col_name] == ''].index + 3
+    else:
+        idx = table.loc[pd.isnull(table[col_name]),:].index + 3
+        
     if len(idx) > 0:
         print('%s tab: %s; %d row(s) is missing. row: %s' %(table_name, col_name, len(idx), str(list(idx)).replace('[', '').replace(']', '')))
         return(1)
@@ -793,7 +797,7 @@ entity_tb.entity_name = entity_tb.entity_name.replace(np.nan, '', regex = True)
 entity_tb.one_and_only = entity_tb.one_and_only.replace(np.nan, '', regex = True)
 entity_tb.entity_status_info = entity_tb.entity_status_info.replace(np.nan, '', regex = True)
 entity_tb.entity_status_notes = entity_tb.entity_status_notes.replace(np.nan, '', regex = True)
-entity_tb.depth_ref = entity_tb.depth_ref.replace(np.nan, '', regex = True)
+#entity_tb.depth_ref = entity_tb.depth_ref.replace(np.nan, '', regex = True) #not applicable anymore
 entity_tb.geology = entity_tb.geology.replace(np.nan, '', regex = True)
 entity_tb.rock_age = entity_tb.rock_age.replace(np.nan, '', regex = True)
 entity_tb.vegetation_type = entity_tb.vegetation_type.replace(np.nan, '', regex=True)
@@ -847,10 +851,10 @@ entity_tb.trace_elements_datafile = entity_tb.trace_elements_datafile.replace(np
 entity_tb.cave_map = entity_tb.cave_map.replace(np.nan, '', regex = True)
 entity_tb.entity_scan = entity_tb.entity_scan.replace(np.nan, '', regex = True)
 entity_tb.contact = entity_tb.contact.replace(np.nan, '', regex = True)
-entity_tb.data_DOI_URL = entity_tb.data_DOI_URL.replace(np.nan, '', regex = True)
+#entity_tb.data_DOI_URL = entity_tb.data_DOI_URL.replace(np.nan, '', regex = True)
 
 sample_tb.entity_name = sample_tb.entity_name.replace(np.nan, '', regex = True)
-sample_tb.modern_reference = sample_tb.modern_reference.replace(np.nan, '', regex = True)
+#sample_tb.modern_reference = sample_tb.modern_reference.replace(np.nan, '', regex = True)   #Not applicable anymore
 sample_tb.hiatus = sample_tb.hiatus.replace(np.nan, '', regex = True)
 sample_tb.gap = sample_tb.gap.replace(np.nan, '', regex = True)
 sample_tb.mineralogy = sample_tb.mineralogy.replace(np.nan, '', regex = True)
@@ -931,60 +935,60 @@ y_n_na_nk_list =['yes', 'no', 'not applicable', 'unknown']
 if len(site_tb.index) != 1:
     sys.exit('Site metadata table is either empty or has more than one site. Exactly one site per workbook is allowed.')
     
-else: # Check that latitude and longitude are numbers and within range
-    loc_warning = False
-    
+
+loc_warning = False
+lat_and_lon = check_no_values(site_tb, 'Site metadata', 'latitude') + check_no_values(site_tb, 'Site metadata', 'latitude')
+
+if lat_and_lon == 0:
     #Latitude:
-    if check_no_values(site_tb, 'Site metadata', 'latitude') == 0:
-        if check_numbers(site_tb, 'Site metadata', 'latitude') == 0:
-            if check_numbers_in_range(site_tb, 'Site metadata', 'latitude', -90, 90) == 1:
-                warning_ctr += 1
-                loc_warning = True
-        else:
+    if check_numbers(site_tb, 'Site metadata', 'latitude') == 0:
+        if check_numbers_in_range(site_tb, 'Site metadata', 'latitude', -90, 90) == 1:
             warning_ctr += 1
             loc_warning = True
     else:
         warning_ctr += 1
+        loc_warning = True
         
     #Longitude
-    if check_no_values(site_tb, 'Site metadata', 'latitude') == 0:
-        if check_numbers(site_tb, 'Site metadata', 'longitude') == 0:
-            if check_numbers_in_range(site_tb, 'Site metadata', 'longitude', -180, 180) == 1:
-                warning_ctr += 1
-                loc_warning = True
-        else:
+    if check_numbers(site_tb, 'Site metadata', 'longitude') == 0:
+        if check_numbers_in_range(site_tb, 'Site metadata', 'longitude', -180, 180) == 1:
             warning_ctr += 1
-            loc_warning = True  
+            loc_warning = True
     else:
         warning_ctr += 1
-        
-    if loc_warning == True:
-        print('Site metadata tab: The coordinates for this site are definitely wrong, please check')
-    else:
-        lat = site_tb.loc[0, 'latitude']
-        lon = site_tb.loc[0, 'longitude']
-        print('Informative: Site metadata tab: This site is at Lat: %f deg and Lon: %f deg. Ensure that these have been properly converted to decimal degrees and are correct' %(lat, lon))
+        loc_warning = True  
+else:
+    sys.exit('Site metadata tab: No coordinates have been provided. Please enter the coordinates of your site.')
+    
+    
+if loc_warning == True:
+    print('Site metadata tab: The coordinates for this site are definitely wrong, please check')
+else:
+    lat = site_tb.loc[0, 'latitude']
+    lon = site_tb.loc[0, 'longitude']
+    
+    print('Informative: Site metadata tab: This site is at Lat: %f deg and Lon: %f deg. Ensure that these have been properly converted to decimal degrees and are correct' %(lat, lon))
+
+
+#Check that site name does not start or end with a space
+site_name = site_tb.loc[0, 'site_name'] 
+if site_name.startswith(' ') | site_name.endswith(' '):
+   warning_ctr += 1
+   print('Site metadata tab: The site_name either starts or ends with a space. Please remove the extra space')
+
+    
+#Check if elevation is present
+if len(site_tb.loc[pd.isnull(site_tb['elevation']), 'elevation'].index) > 0:
+    print('Informative: Site metadata: elevation is missing. Please check and make sure that elevation is truly missing.')
+else:
+    warning_ctr += check_numbers(site_tb, 'Site metadata', 'elevation')
     
 
-    #Check that site name does not start or end with a space
-    site_name = site_tb.loc[0, 'site_name'] 
-    if site_name.startswith(' ') | site_name.endswith(' '):
-       warning_ctr += 1
-       print('Site metadata tab: The site_name either starts or ends with a space. Please remove the extra space')
-
-        
-    #Check if elevation is present
-    if len(site_tb.loc[pd.isnull(site_tb['elevation']), 'elevation'].index) > 0:
-        print('Informative: Site metadata: elevation is missing. Please check and make sure that elevation is truly missing.')
-    else:
-        warning_ctr += check_numbers(site_tb, 'Site metadata', 'elevation')
-        
-    
-    #Check that the monitoring options are from the dropdown list
-    if check_no_values(site_tb, 'Site metadata', 'monitoring') == 0:
-        warning_ctr += check_values2list(site_tb, 'monitoring', 'Site metadata', y_n_nk_list)
-    else:
-        warning_ctr += 1
+#Check that the monitoring options are from the dropdown list
+if check_no_values(site_tb, 'Site metadata', 'monitoring') == 0:
+    warning_ctr += check_values2list(site_tb, 'monitoring', 'Site metadata', y_n_nk_list)
+else:
+    warning_ctr += 1
 
 
 #______________________________________________________________________________
@@ -1006,41 +1010,142 @@ if check_no_values(entity_tb, 'Entity metadata', 'entity_name') == 0:
             warning_ctr += 1
             print('Entity metadata tab: The entity_name %s either starts or ends with a space. Please remove the extra space' %i)
     ent_ls = list(entity_tb['entity_name'])
-    rep_ent = list(sorted(set([x for x in ent_ls if ent_ls.count(x) > 1]))) 
+    rep_ent = list(sorted(set([x for x in ent_ls if ent_ls.count(x) > 1])))
     if len(rep_ent) > 0:
         warning_ctr += 1
         sys.exit('Entity metadata tab: There are repeated entity_name(s): %s. The checking script cannot continue and will terminate here.' %str(list(rep_ent)).replace('[', '').replace(']', ''))
 else:
-    warning_ctr += 1
+    sys.exit()
     
-#Checks that mandatory dropdown columns are filled and entries are from dropdown list
-if check_no_values(entity_tb, 'Entity metadata', 'depth_ref') == 0:
-    warning_ctr += check_values2list(entity_tb, 'depth_ref', 'Entity metadata', ['from top', 'from base', 'not applicable'])
-else:
-    warning_ctr += 1
     
-#the following are not necessary, yet checked for their presence
-if check_no_values(entity_tb, 'Entity metadata', 'speleothem_type') == 0: 
-    warning_ctr += check_values2list(entity_tb, 'speleothem_type', 'Entity metadata', ['composite', 'stalagmite', 'stalactite', 'flowstone', 'mixed (see notes)', 'other (see notes)', 'unknown'])
-else:
-    warning_ctr += 1
-    
-if check_no_values(site_tb, 'Entity metadata', 'geology') == 0:
-    warning_ctr += check_values2list(site_tb, 'geology', 'Entity metadata', ['limestone', 'dolomite', 'marble', 'dolomitic limestone', 'marly limestone', 'calcarenite', 'gypsum', 'mixed (see notes)', 'other (see notes)', 'unknown'])
-else:
-    warning_ctr += 1
-if check_no_values(site_tb, 'Entity metadata', 'rock_age') == 0:
-    warning_ctr += check_values2list(site_tb, 'rock_age', 'Entity metadata', ['Holocene', 'Pleistocene', 'Pliocene', 'Miocene', 'Oligocene', 'Eocene', 'Palaeocene', 'Cretaceous', 'Jurassic', 'Triassic', 'Permian', 'Carboniferous', 'Devonian', 'Silurian', 'Ordovician', 'Cambrian', 'Precambrian', 'mixed (see notes)', 'other (see notes)', 'unknown'])
-else:
-    warning_ctr += 1        
-    
-#MISSING: columns d13C, d18O  
-    
-# Check that the values are from dropdown list
-warning_ctr += check_values2list(entity_tb, 'drip_type', 'Entity metadata', ['seepage flow', 'seasonal drip', 'fast flow', 'mixed (see notes)', 'unknown', 'other (see notes)'])
+#All Dropdown lists as lists
+entity_status_info_dd = ['current', 'current pratially modified', 'superseded', 'unknown']
+geology_dd = ['limestone', 'dolomite', 'marble', 'dolomitic limestone', 'marly limestone', 'calcarenite', 'mixed (see notes)', 'other (see notes)', 'unknown']
+rock_age_dd = ['Holocene', 'Pleistocene', 'Pliocene', 'Miocene', 'Oligocene', 'Eocene', 'Palaeocene', 'Cretaceous', 'Jurassic', 'Triassic', 'Permian', 'Carboniferous', 'Devonian', 'Silurian', 'Ordovician', 'Cambrian', 'Precambrian', 'mixed (see notes)', 'other (see notes)', 'unknown']
+vegetation_type_dd = ["evergreen", "deciduous", "shrubland", "grassland", "sparse", "barren", "trees and grass", "moorland", "mixed (see notes)", "other (see notes)", "unknown"]
+land_use_dd = ["water body", "wetland", "forest", "farmland", "pasture", "concrete and built up", "limited or no use", "mixed (see notes)", "other (see notes)", "unknown"]
+cover_type_dd = ["thick", "thin", "patchy", "barren", "mixed (see notes)", "other (see notes)", "unknown"]
+speleothem_type_dd = ["stalagmite", "stalactite", "flowstone", "composite", "mixed (see notes)", "other (see notes)", "unknown"]
+drip_type_dd = ["seepage flow", "seasonal drip", "fast flow", "mixed (see notes)", "other (see notes)", "unknown"]
+isotope_standards_dd = ["PDB", "Vienna-PDB", "unknown"]
+trace_element_measurement_method_dd = ["solution ICP-MS", "solution OES-MS", "solution ICP-AES", "synchroton XRF", "micro XRF", "micro XRF (ITRAX)", "LA-ICP-MS", "LA-ICP-AES", "SIMS", "Electron Microprobe (EPMA)", "TIMS", "other (see notes)", "unknown"]
+trace_element_std_dd = ["NIST SRM 610", "NIST SRM 612", "NIST SRM 614", "CaCO3 (NIST SRM 915a)", "SrCO3 (NIST SRM 987)", "MACS-1", "MACS-3", "standard stock solutions of known concentrations", "multi-element standards pre-calibrated by Merck etc.", "Japanese coral standard JCP-1 doped with single element standards of known concentrations", "metal standards", "other (see notes)", "unknown"]
+trace_element_downsampled_dd = ["No-not applicable", "No-aliquots of same powder used for stable isotope and trace element measurements.", "No-but different powders used for stable isotope and trace element measurements.", "Yes-author downsampled", "Yes-SISAL downsampled", "other (see notes)", "unknown"]
+trace_element_downsampling_method_dd = ["running average/mean", "linear interpolation", "NESTool - kernel based downsampling", "IgorPro - linear smoothing splines", "IgorPro - interpolation", "Binned average", "Savitzky-Golay filter", "Gaussian kernel", "Loess", "Lowess", "MATLAB - interpolation", "other (see notes)"]
+date_type_dd = ["C14", "MC-ICP-MS U/Th", "ICP-MS U/Th Other", "Alpha U/Th", "TIMS", "U/Th unspecified", "Cross-dating", "Multiple methods", "Event; hiatus", "Event; actively forming", "Event; start of laminations", "Event; end of laminations", "mixed (see notes)"]
+material_dated_dd = ["calcite", "aragonite", "organic", "mixed (see notes)", "other (see notes)", "unknown"]
+minerology_dd = ["calcite", "secondary calcite", "aragonite", "vaterite", "organic", "other (see notes)", "unknown"]
+age_model_type_dd = ["linear", "linear between dates", "polynomial fit", "polynomial fit omitting outliers", "Bayesian", "Bayesian Bacon", "Bayesian Bchron", "StalAge", "StalAge and other", "Clam", "COPRA", "OxCal", "unknown"]
+ann_lam_check_dd = ["14C peak", "14C slope", "U/Th cycle", "trace element cycle", "assumed", "not applicable", "other (see notes)"]
+dep_rate_check_dd = ["yes", "no", "assumed", "unknown"]
+decay_constants_dd = ["Cheng et al. 2000", "Cheng et al. 2013", "Edwards et al. 1987", "Ivanovich & Harmon 1992", "unknown", "other (see notes)"]
+calibration_14C_dd = ["INTCAL13 NH", "INTCAL13 SH", "INTCAL13 marine", "INTCAL09", "INTCAL09 marine", "INTCAL04 NH", "INTCAL04 SH", "INTCAL98", "FAIRBANKS09", "not calibrated", "unknown"]
 
+
+
+#Checks that mandatory dropdown columns are filled and entries are from dropdown list
+
+#column 'one_and_only' checked later
+
+if check_no_values(entity_tb, 'Entity metadata', 'entity_status_info') == 0:
+    warning_ctr += check_values2list(entity_tb, 'entity_status_info', 'Entity metadata', entity_status_info_dd)
+else:
+    warning_ctr += 1   
+if check_no_values(entity_tb, 'Entity metadata', 'geology') == 0:
+    warning_ctr += check_values2list(entity_tb, 'geology', 'Entity metadata', geology_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'rock_age') == 0:
+    warning_ctr += check_values2list(entity_tb, 'rock_age', 'Entity metadata', rock_age_dd)
+else:
+    warning_ctr += 1  
+if check_no_values(entity_tb, 'Entity metadata', 'vegetation_type') == 0:
+    warning_ctr += check_values2list(entity_tb, 'vegetation_type', 'Entity metadata', vegetation_type_dd)
+else:
+    warning_ctr += 1     
+if check_no_values(entity_tb, 'Entity metadata', 'land_use') == 0:
+    warning_ctr += check_values2list(entity_tb, 'land_use', 'Entity metadata', land_use_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'cover_type') == 0:
+    warning_ctr += check_values2list(entity_tb, 'cover_type', 'Entity metadata', cover_type_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'speleothem_type') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'speleothem_type', 'Entity metadata', speleothem_type_dd)
+else:
+    warning_ctr += 1  
+if check_no_values(entity_tb, 'Entity metadata', 'drip_type') == 0: 
+    warning_ctr += check_values2list(entity_tb, 'drip_type', 'Entity metadata', drip_type_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'd13C') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'd13C', 'Entity metadata', y_n_nk_list)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'd18O') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'd18O', 'Entity metadata', y_n_nk_list)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'iso_sted') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'iso_std', 'Entity metadata', isotope_standards_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'd13C') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'd13C', 'Entity metadata', y_n_nk_list)
+else:
+    warning_ctr += 1
+
+for trace in ['Sr_Ca', 'Mg_Ca', 'Ba_Ca', 'U_Ca', 'P_Ca']:
+    if check_no_values(entity_tb, 'Entity metadata', trace+'_method') == 0:    
+        warning_ctr += check_values2list(entity_tb, trace+'_method', 'Entity metadata', trace_element_measurement_method_dd)
+    else:
+        warning_ctr += 1
+    if check_no_values(entity_tb, 'Entity metadata', trace+'_std') == 0:    
+        warning_ctr += check_values2list(entity_tb, trace+'_std', 'Entity metadata', trace_element_std_dd)
+    else:
+        warning_ctr += 1
+    if check_no_values(entity_tb, 'Entity metadata', trace+'_downsampled') == 0:    
+        warning_ctr += check_values2list(entity_tb, trace+'_downsampled', 'Entity metadata', trace_element_downsampled_dd)
+    else:
+        warning_ctr += 1
+    if check_no_values(entity_tb, 'Entity metadata', trace+'_downsampling_method') == 0:    
+        warning_ctr += check_values2list(entity_tb, trace+'downsampling_method', 'Entity metadata', trace_element_downsampling_method_dd)
+    else:
+        warning_ctr += 1
+
+if check_no_values(entity_tb, 'Entity metadata', 'Sr_isotopes_method') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'Sr_isotopes_method', 'Entity metadata', trace_element_measurement_method_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'Sr_isotopes_std') == 0:    
+    warning_ctr += check_values2list(entity_tb, 'Sr_isotopes_std', 'Entity metadata', trace_element_std_dd)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'trace_elements_metadatafile') == 0:
+    warning_ctr += check_values2list(entity_tb, 'trace_elements_metadatafile', 'Entity metadata', y_n_list)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'cave_map') == 0:
+    warning_ctr += check_values2list(entity_tb, 'cave_map', 'Entity metadata', y_n_list)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'entity_scan') == 0:
+    warning_ctr += check_values2list(entity_tb, 'entity_scan', 'Entity metadata', y_n_list)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'trace_elements_datafile') == 0:
+    warning_ctr += check_values2list(entity_tb, 'trace_elements_datafile', 'Entity metadata', y_n_list)
+else:
+    warning_ctr += 1
+if check_no_values(entity_tb, 'Entity metadata', 'trace_elements_metadatafile') == 0:
+    warning_ctr += check_values2list(entity_tb, 'trace_elements_metadatafile', 'Entity metadata', y_n_list)
+else:
+    warning_ctr += 1
+    
 #Check values are from yes, no, other, unknown list
-entity_y_n_o_nk_columns = ['host_rock_trace_elements', 'drip_water_trace_elements', 'd18O_water_equilibrium', 'organics', 'fluid_inclusions', 'mineralogy_petrology_fabric', 'clumped_isotopes', 'noble_gas_temperatures', 'C14', 'ODL', 'Sr_Ca', 'Mg_Ca', 'Ba_Ca', 'U_Ca', 'P_Ca']
+entity_y_n_o_nk_columns = ['host_rock_trace_elements', 'drip_water_trace_elements', 'd18O_water_equilibrium', 'organics', 'fluid_inclusions', 'mineralogy_petrology_fabric', 'clumped_isotopes', 'noble_gas_temperatures', 'C14', 'ODL', 'Sr_Ca', 'Mg_Ca', 'Ba_Ca', 'U_Ca', 'P_Ca', 'Sr_isotopes']
+
 for i in entity_y_n_o_nk_columns:
     if check_no_values(entity_tb, 'Entity metadata', i) == 0:
         warning_ctr += check_values2list(entity_tb, i, 'Entity metadata', y_n_o_nk_list)
@@ -1049,76 +1154,87 @@ for i in entity_y_n_o_nk_columns:
 
 
 
-        
-
-
-
-
-
 # Check that contact names are filled in properly
+contacts_list = list(set([entity_tb.loc[i, 'contact'] for i in entity_tb.index if  entity_tb.loc[i, 'contact'] != '']))
+    
+if len(contacts_list) == 0:
+    print('Entity metadata tab: Contact_name in row %d is empty. Name and surname(s) are required' %(i + 3))
+    warning_ctr += 1
 
-for i in entity_tb.index:
-    contact = entity_tb['contact'][i]
-    if pd.isnull(contact):
-        print('Entity metadata tab: Contact_name in row %d is empty. Name and surname(s) are required' %(i + 3))
-        warning_ctr += 1
-        continue
-    elif isinstance(contact, Number):
-        print('Entity metadata tab: Contact_name in row %d is numeric instead of text. Name and surname(s) are required' %(i + 3))
-        warning_ctr += 1
-        continue
-    elif ' ' not in contact:
-        print('Entity metadata tab: Contact_name in row %d is only one word. Name and surname(s) are required' %(i + 3))
-        warning_ctr += 1
-        continue
-    elif contact.isspace() | contact.startswith(' ') | contact.endswith(' '):
-        print('Entity metadata tab: Contact_name in row %d is just spaces or starts and ends with spaces. Name and surname(s) are required' %(i + 3))
-        warning_ctr += 1
-        continue
-    else:
-        words = contact.split(' ')
-        countr = 0
-        # if name is two word long and one is initial, this is not accepted
-        # if this is a three worded name, one initial is accepted
-        if len(words) > 2:
-            threshold = 1
-        else:
-            threshold = 0
-        for j in words:
-            # Check for names with one letter length. Likely initials
-            if len(j) < 2:
-                countr += 1
-            # Check for initials with full stop at the end of their names
-            elif j.endswith('.'):
-                countr += 1
-        if countr > threshold:
-            print('Entity metadata tab: Contact_name in row %d seems to not fulfill the criteria of a full name. Name and surname(s) are required' %(i + 3))
+else:
+    for contact in contacts_list:
+        
+        if isinstance(contact, Number):
+            print('Entity metadata tab: Contact_name in row %d is numeric instead of text. Name and surname(s) are required' %(i + 3))
             warning_ctr += 1
+           
+        elif ' ' not in contact:
+            print('Entity metadata tab: Contact_name in row %d is only one word. Name and surname(s) are required' %(i + 3))
+            warning_ctr += 1
+           
+        elif contact.isspace() or contact.startswith(' ') or contact.endswith(' '):
+            print('Entity metadata tab: Contact_name in row %d is just spaces or starts and ends with spaces. Name and surname(s) are required' %(i + 3))
+            warning_ctr += 1
+          
+        else:
+            words = contact.split(' ')
+            countr = 0
+            # if name is two word long and one is initial, this is not accepted
+            # if this is a three worded name, one initial is accepted
+            if len(words) > 2:
+                threshold = 1
+            else:
+                threshold = 0
+                
+            for j in words:
+                # Check for names with one letter length. Likely initials
+                if len(j) < 2:
+                    countr += 1
+                # Check for initials with full stop at the end of their names
+                elif j.endswith('.'):
+                    countr += 1
+            if countr > threshold:
+                print('Entity metadata tab: Contact_name in row %d seems to not fulfill the criteria of a full name. Name and surname(s) are required' %(i + 3))
+                warning_ctr += 1
+                
+            
+            
+            
+            
 
 # Check one and only
 if check_no_values(entity_tb, 'Entity metadata', 'one_and_only') == 0:
-    if check_values2list(entity_tb, 'one_and_only', 'Entity metadata', ['yes', 'no']) == 0:
+    if check_values2list(entity_tb, 'one_and_only', 'Entity metadata', y_n_list) == 0:
+        
         if check_no_values(entity_tb, 'Entity metadata', 'entity_status_info') == 0:
-            if check_values2list(entity_tb, 'entity_status_info', 'Entity metadata', ['completely supersedes', 'completely superseded by', 'partially supersedes', 'partially superseded by', 'not applicable']) == 0:
+            if check_values2list(entity_tb, 'entity_status_info', 'Entity metadata', entity_status_info_dd) == 0:
+                
                 one_and_only_entity = entity_tb.loc[(entity_tb['one_and_only'] == 'yes') & (entity_tb['entity_status_info'] != 'not applicable'),:]
+                
                 if one_and_only_entity.shape[0] > 0:
                     warning_ctr += 1
                     print('Entity metadata tab: if one_and_only = "yes", entity_status_info must be "not applicable". See row %s' %(str([i+3 for i in one_and_only_entity.index]).replace('[', '').replace(']', '')))
+                
                 one_and_only_entity = entity_tb.loc[(entity_tb['one_and_only'] == 'yes') & (entity_tb['entity_status_notes'] != ''),:]
+               
                 if one_and_only_entity.shape[0] > 0:
                     warning_ctr += 1
                     print('Entity metadata tab: if one_and_only = "yes", entity_status_notes must be empty. See row %s' %(str([i+3 for i in one_and_only_entity.index]).replace('[', '').replace(']', '')))
+                
                 not_one_and_only_ent = entity_tb.loc[(entity_tb['one_and_only'] == 'no'),:]
                 # Note that check_no_values was not used here as the checks are already 
                 # taken into account when creating the indices. '' already replaces
                 # np.nan and we do not allow '' anyways
                 indices = [i for i, s in enumerate(not_one_and_only_ent['entity_status_info']) if (any(x == s.lower() for x in ['not applicable']))]
                 not_one_and_only_ent = not_one_and_only_ent.iloc[indices,:]
+                
                 if not_one_and_only_ent.shape[0] > 0:
                     warning_ctr += 1
                     print('Entity metadata tab: if one_and_only = "no", entity_status_info cannot be "not applicable". row number: %s' %(str([i+3 for i in not_one_and_only_ent.index]).replace('[', '').replace(']', ''))) 
-                indices = [i for i, s in enumerate(not_one_and_only_ent['entity_status_notes']) if (any(x == s.lower() for x in ['unknown', 'unknwn', '', ' ', 'n/a', 'na', 'not applicable', 'not known', 'notknown', 'unkwn'])) | s.isspace()]
+                
+                indices = [i for i, s in enumerate(not_one_and_only_ent['entity_status_notes']) if (any(x == s.lower() for x in ['unknown', 'unknwn', '', ' ', 'n/a', 'n.a.', 'na', 'not applicable', 'none', 'not known', 'notknown', 'nk', 'unkwn'])) | s.isspace()]
                 not_one_and_only_ent = not_one_and_only_ent.iloc[indices,:]
+                
                 if not_one_and_only_ent.shape[0] > 0:
                     warning_ctr += 1
                     print('Entity metadata tab: if one_and_only = "no", entity_status_notes cannot be empty, "NA", "unknown", "not known" (and their respective variants, see notes in SISAL_wb_checks GD document if required). row number: %s' %(str([i+3 for i in not_one_and_only_ent.index]).replace('[', '').replace(']', '')))
@@ -1132,15 +1248,22 @@ if check_no_values(entity_tb, 'Entity metadata', 'one_and_only') == 0:
 else:
     warning_ctr += 1
 
-# Check that the number columns are filled in properly
-warning_ctr += check_numbers(entity_tb, 'Entity metadata', 'cover_thickness')
-warning_ctr += check_numbers(entity_tb, 'Entity metadata', 'distance_entrance')
+
+
+# Check that the numeical columns are filled in properly
+for i in ['cover_thickness','distance_entrance','drip_height','d18O_dripwater_carbonate_difference']:
+    warning_ctr += check_numbers(entity_tb, 'Entity metadata', i)
+
+
+
+
 # Check that data_DOI_URL are entered properly. Either empty or an actual URL/DOI
-indices = [i for i, s in enumerate(entity_tb['data_DOI_URL']) if (any(x == s.lower() for x in ['unknown', ' ', 'n/a', 'na', 'not known', 'notknown', 'not applicable', 'unkwn'])) | s.startswith(' ') | s.endswith(' ')]
+indices = [i for i, s in enumerate(entity_tb['data_DOI_URL']) if (any(x == s.lower() for x in ['unknown', 'unknwn', '', ' ', 'n/a', 'n.a.', 'na', 'none', 'not applicable', 'not known', 'notknown', 'nk', 'unkwn'])) | s.startswith(' ') | s.endswith(' ')]
 indices = entity_tb.iloc[indices,:].index + 3
 if len(indices) > 0:
     warning_ctr += 1
     print('Entity metadata tab: the NOAA/PANGEA URL or DOI of the data in row %s is incorrect. This cannot be "unknown", "N/A", "not known", etc. or have spaces before/after the text. It must either be the URL/DOI or just empty (as is expected in most cases)' %str(list(indices)))
+
 else:
     # Check that data_DOI_URL starts with http, 10. or ftp.
     entity_tb_s = entity_tb.loc[entity_tb['data_DOI_URL'] != '',:]
@@ -1149,6 +1272,23 @@ else:
     if len(indices) > 0:
         warning_ctr += 1
         print('Entity metadata tab: the NOAA/PANGEA URL or DOI of the data in row %s is incorrect. The URL or DOI must start with either "10.", "ftp", or "http".' %str(list(indices))) 
+
+
+#Inform that no checks on composites and list entity names of composites and non-composites
+
+if 'composite' in entity_tb['speleothem_type'].values:
+    composites_list = entity_tb['entity_name'][entity_tb['speleothem_type'] == 'composite']
+    non_composites_list = entity_tb['entity_name'][entity_tb['speleothem_type'] != 'composite']
+    print(f"Informative: Entity tab: There is/are {len(composites_list)} composite(s) in this workbook. Please note that no checks will be conducted in this version of the automatic checks on entities that are composites.")
+else:
+    non_composites_list = entity_tb['entity_name'] 
+
+
+
+
+
+
+
 
 
 # -----------------------------------------------------------------------------
@@ -1173,8 +1313,7 @@ if len(ent_ls) > 0:
 #
 # Section 7.ii. Check for composites
 # _____________________________________________________________________________
-if 'composite' in list(entity_tb['speleothem_type']):
-    print('Informative: Notes tab: There is a composite in this workbook. Please list the entity_names/references (or entity_id if already in SISAL) of the records used to construct this composite in the Notes tab.')
+
 ent_ls2 = []
 for i in entity_tb.index:
     ent_name = entity_tb['entity_name'][i]
