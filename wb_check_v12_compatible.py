@@ -168,7 +168,7 @@ with warnings.catch_warnings():
 # Section 3. Check workbook is the right version
 # =============================================================================
 site_col = set(['site_name', 'latitude', 'longitude', 'elevation', 'monitoring']) - set(site_tb.columns)
-entity_col = set(["entity_name", "one_and_only", "entity_status_info", "entity_status_notes", "geology", "rock_age", "vegetation_type", "land_use", "cover_type", "cover_thickness", "host_rock_trace_elements", "drip_water_trace_elements", "distance_entrance", "speleothem_type", "drip_type", "drip_height", "d13C", "d18O", "iso_std", "d18O_water_equilibrium", "d18O_dripwater_carbonate_difference", "organics", "fluid_inclusions", "mineralogy_petrology_fabric", "clumped_isotopes", "noble_gas_temperatures", "C14", "ODL", "Sr_Ca", "Sr_Ca_method", "Sr_Ca_std", "Sr_Ca_downsampled", "Sr_Ca_downsampling_method", "Mg_Ca", "Mg_Ca_method", "Mg_Ca_std", "Mg_Ca_downsampled", "Mg_Ca_downsampling_method", "Ba_Ca", "Ba_Ca_method", "Ba_Ca_std", "Ba_Ca_downsampled", "Ba_Ca_downsampling_method", "U_Ca", "U_Ca_method", "U_Ca_std", "U_Ca_downsampled", "U_Ca_downsampling_method", "P_Ca", "P_Ca_method", "P_Ca_std", "P_Ca_downsampled", "P_Ca_downsampling_method", "Sr_isotopes", "Sr_isotopes_method", "Sr_isotopes_std", "trace_elements_datafile", "trace_elements_metadatafile", "cave_map", "entity_scan", "contact", "data_DOI_URL"]) - set(entity_tb.columns)
+entity_col = set(["entity_name", "one_and_only", "entity_status_info", "entity_status_notes", "geology", "rock_age", "vegetation_type", "land_use", "cover_type", "cover_thickness", "host_rock_trace_elements", "drip_water_trace_elements", "distance_entrance", "speleothem_type", "drip_type", "drip_height", "d13C", "d18O", "iso_std", "d18O_water_equilibrium", "d18O_dripwater_carbonate_difference", "organics", "fluid_inclusions", "mineralogy_petrology_fabric", "clumped_isotopes", "noble_gas_temperatures", "C14", "ODL", "Sr_Ca", "Sr_Ca_method", "Sr_Ca_std", "Sr_Ca_downsampled", "Sr_Ca_downsampling_method", "Mg_Ca", "Mg_Ca_method", "Mg_Ca_std", "Mg_Ca_downsampled", "Mg_Ca_downsampling_method", "Ba_Ca", "Ba_Ca_method", "Ba_Ca_std", "Ba_Ca_downsampled", "Ba_Ca_downsampling_method", "U_Ca", "U_Ca_method", "U_Ca_std", "U_Ca_downsampled", "U_Ca_downsampling_method", "P_Ca", "P_Ca_method", "P_Ca_std", "P_Ca_downsampled", "P_Ca_downsampling_method", "Sr_isotopes", "Sr_isotopes_method", "Sr_isotopes_std", "trace_elements_datafile", "trace_elements_metadatafile", "cave_map", "entity_scan", "contact", "contact_orcid", "data_DOI_URL"]) - set(entity_tb.columns)
 ref_col = set(['entity_name', 'citation', 'publication_DOI']) - set(ref_tb.columns)
 date_col = set(["entity_name", "date_type", "depth_dating", "dating_thickness", "lab_num", "material_dated", "min_weight", "max_weight", "uncorr_age", "uncorr_age_uncert_pos", "uncorr_age_uncert_neg", "14C_correction", "calib_used", "date_used", "238U_content", "238U_uncertainty", "232Th_content", "232Th_uncertainty", "230Th_content", "230Th_uncertainty", "230Th_232Th_ratio", "230Th_232Th_ratio_uncertainty", "230Th_238U_activity", "230Th_238U_activity_uncertainty", "234U_238U_activity", "234U_238U_activity_uncertainty", "decay_constant", "ini_230Th_232Th_ratio", "ini_230Th_232Th_ratio_uncertainty", "corr_age", "corr_age_uncert_pos", "corr_age_uncert_neg", "chem_year"]) - set(dating_tb.columns)
 lam_col = set(['entity_name', 'depth_lam', 'lam_thickness', 'lam_age', 'lam_age_uncert_pos', 'lam_age_uncert_neg']) - set(dating_lamina_tb.columns)
@@ -851,7 +851,8 @@ entity_tb.trace_elements_datafile = entity_tb.trace_elements_datafile.replace(np
 entity_tb.cave_map = entity_tb.cave_map.replace(np.nan, '', regex = True)
 entity_tb.entity_scan = entity_tb.entity_scan.replace(np.nan, '', regex = True)
 entity_tb.contact = entity_tb.contact.replace(np.nan, '', regex = True)
-#entity_tb.data_DOI_URL = entity_tb.data_DOI_URL.replace(np.nan, '', regex = True)
+entity_tb.contact_orcid = entity_tb.contact_orcid.replace(np.nan, '', regex= True)
+#entity_tb.data_DOI_URL = entity_tb.data_DOI_URL.replace(np.nan, '', regex = True) #Not changed because of later tests
 
 sample_tb.entity_name = sample_tb.entity_name.replace(np.nan, '', regex = True)
 #sample_tb.modern_reference = sample_tb.modern_reference.replace(np.nan, '', regex = True)   #Not applicable anymore
@@ -888,6 +889,8 @@ if entity_tb.entity_name.dtype != 'O':
     entity_tb.entity_name = entity_tb.entity_name.astype('str')
 if entity_tb.entity_status_notes.dtype != 'O':
     entity_tb.entity_status_notes = entity_tb.entity_status_notes.astype('str')
+if entity_tb.contact_orcid.dtype != 'O':
+    entity_tb.contact_orcid = entity_tb.contact_orcid.astype('str')
 if dating_tb.entity_name.dtype != 'O':
     dating_tb.entity_name = dating_tb.entity_name.astype('str')
 if dating_lamina_tb.entity_name.dtype != 'O':
@@ -1153,54 +1156,87 @@ for i in entity_y_n_o_nk_columns:
         warning_ctr += 1
 
 
-
-# Check that contact names are filled in properly
-contacts_list = list(set([entity_tb.loc[i, 'contact'] for i in entity_tb.index if  entity_tb.loc[i, 'contact'] != '']))
+#Columns without dropdown lists:
     
-if len(contacts_list) == 0:
-    print('Entity metadata tab: Contact_name in row %d is empty. Name and surname(s) are required' %(i + 3))
-    warning_ctr += 1
+# Check that contact names and orcid id are filled in properly
 
+contacts_dict = {i: entity_tb.loc[i, 'contact'] for i in entity_tb.index if entity_tb.loc[i, 'contact'] != ''}
+
+orcid_id_dict = {i: entity_tb.loc[i, 'contact_orcid'] for i in entity_tb.index if entity_tb.loc[i, 'contact_orcid'] != ''}
+
+
+if len(contacts_dict) == 0:
+    print('Entity metadata tab: Contact column is empty. At least one contact is required.')
+    warning_ctr += 1
+    
 else:
-    for contact in contacts_list:
-        
+    for idx, contact in contacts_dict.items():  
         if isinstance(contact, Number):
-            print('Entity metadata tab: Contact_name in row %d is numeric instead of text. Name and surname(s) are required' %(i + 3))
+            print(f'Entity metadata tab: Contact in row {idx + 3} is numeric instead of text. Name and surname(s) are required')
             warning_ctr += 1
-           
+
+        elif contact.isspace():
+            print(f'Entity metadata tab: Contact in row {idx + 3} is just spaces. Name and surname(s) are required')
+            warning_ctr += 1
+
+        elif contact.startswith(' ') or contact.endswith(' '):
+            print(f'Entity metadata tab: Contact in row {idx + 3} starts or ends with spaces. Name and surname(s) are required')
+            warning_ctr += 1
+
         elif ' ' not in contact:
-            print('Entity metadata tab: Contact_name in row %d is only one word. Name and surname(s) are required' %(i + 3))
+            print(f'Entity metadata tab: Contact "{contact}" in row {idx + 3} is only one word. Name and surname(s) are required')
             warning_ctr += 1
-           
-        elif contact.isspace() or contact.startswith(' ') or contact.endswith(' '):
-            print('Entity metadata tab: Contact_name in row %d is just spaces or starts and ends with spaces. Name and surname(s) are required' %(i + 3))
-            warning_ctr += 1
-          
+
         else:
-            words = contact.split(' ')
-            countr = 0
-            # if name is two word long and one is initial, this is not accepted
-            # if this is a three worded name, one initial is accepted
-            if len(words) > 2:
-                threshold = 1
-            else:
-                threshold = 0
+            words = contact.split()
+            count_initials = sum(1 for word in words if len(word) < 2 or word.endswith('.'))
+            threshold = 1 if len(words) > 2 else 0
+
+            if count_initials > threshold:
+                print(f'Entity metadata tab: Contact "{contact}" in row {idx + 3} seems incomplete. Name and surname(s) are required')
+                warning_ctr += 1
+
                 
-            for j in words:
-                # Check for names with one letter length. Likely initials
-                if len(j) < 2:
-                    countr += 1
-                # Check for initials with full stop at the end of their names
-                elif j.endswith('.'):
-                    countr += 1
-            if countr > threshold:
-                print('Entity metadata tab: Contact_name in row %d seems to not fulfill the criteria of a full name. Name and surname(s) are required' %(i + 3))
+
+
+if len(orcid_id_dict) != 0:
+    for idx, orcid in orcid_id_dict.items():
+        
+        if idx not in contacts_dict.keys():
+            print(f'Entity metadata tab: ORCID iD in row {idx+3} is not associated with a contact. Please provide a contact or remove the ORCID iD.')
+            warning_ctr += 1
+            
+        elif orcid.isspace():
+            print(f'Entity metadata tab: ORCID iD in row {idx+3} is only spaces. Please leave the cell empty or provide an ORCID iD.')
+            warning_ctr += 1
+            
+        elif orcid.startswith(' ') or orcid.endswith(' '):
+            print(f'Entity metadata tab: ORCID iD in row {idx+3} starts or ends with a space. Please remove any extra spaces.')
+            warning_ctr += 1
+            
+        elif '-' not in orcid:
+            print(f'Entity metadata tab: ORCID iD in row {idx+3} is not separated by dashes. Please include the dashes of the ORCID iD.')
+            warning_ctr += 1
+            
+        else:
+            orcid_no_dashes = orcid.replace('-', '')
+            orcid_split = orcid.split('-')
+            
+            if len(orcid_no_dashes) != 16:
+                print('Entity metadata tab: ORCID iD in row {idx + 3} is lacking digits. Please check.')
+                warning_ctr += 1
+            
+            elif len(orcid_split) != 4 or any(len(group) != 4 for group in orcid_split):
+                print('Entity metadata tab: ORCID iD in row {idx + 3} is not in a 4 by 4 format. Please check.')
                 warning_ctr += 1
                 
+            elif any(char not in '0123456789X' for char in orcid_no_dashes):
+                print('Entity metadata tab: ORCID iD in row {idx + 3} contains invalid characters. Please check.')
+                warning_ctr += 1
             
             
             
-            
+
 
 # Check one and only
 if check_no_values(entity_tb, 'Entity metadata', 'one_and_only') == 0:
@@ -1289,10 +1325,8 @@ else:
 
 
 
-
-
 # -----------------------------------------------------------------------------
-# Section 7.i.c. Sample spreadsheet   
+# Section 7.iii Sample spreadsheet   
 # -----------------------------------------------------------------------------
 warning_ctr += check_values2list(sample_tb, 'hiatus', 'Sample data', ['H', ''], na_rm = True)  # added '' as np.nan was replaced by ''
 warning_ctr += check_values2list(sample_tb, 'gap', 'Sample data', ['G', ''], na_rm = True)  # added '' as np.nan was replaced by ''
